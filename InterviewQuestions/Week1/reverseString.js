@@ -1,0 +1,18 @@
+// Brute Force -> T.C = O(n), S.C = O(n)
+
+function reverseTheString (str) {
+    let reversedString = ''
+    for(let i = str.length - 1; i >= 0; i--) {
+        reversedString += str[i]
+    }
+    return reversedString
+}
+
+// More readable -> T.C = O(n), S.C = O(n)
+
+function reverseString (str) {
+    return str.split('').reverse().join('')
+}
+
+console.log('reverseTheString', reverseTheString('rohan'))
+console.log('reverseString', reverseString('ayush'))

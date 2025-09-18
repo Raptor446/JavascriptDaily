@@ -1,0 +1,13 @@
+h1 {
+    text-align: center;
+}
+
+.title-container {
+    text-align: center;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+}
