@@ -20,12 +20,12 @@ Array.prototype.myReduce = function(callbackFn, initialValue) {
 
   // Return the final accumulated value
   return accumulator
-};
+}
 
 /*
 Array.prototype.myReduce = ...: We add myReduce as a method to the Array.prototype object. This makes the method available to all arrays.
 
-const arr = this;: Inside the method, the this keyword refers to the array instance the method was called on. For example, if you call [1, 2].myReduce(...), this will be [1, 2].
+const arr = this: Inside the method, the this keyword refers to the array instance the method was called on. For example, if you call [1, 2].myReduce(...), this will be [1, 2].
 
 Handle initialValue: This is a crucial part of the logic. If no initialValue is provided, the first element of the array (arr[0]) is used as the accumulator, and the loop starts from the second element (arr[1]). If an initialValue is provided, the accumulator starts with that value, and the loop begins from the first element (arr[0]).
 

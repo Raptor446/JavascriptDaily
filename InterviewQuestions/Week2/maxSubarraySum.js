@@ -22,7 +22,7 @@ var maxSubArray = function(nums) {
         maxSum = Math.max(currentSum, maxSum)
     }
     return maxSum
-};
+}
 
 console.log(maxSubarraySum([2,1,5,1,3,2], 3)) // 9 ([5,1,3])
 console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4])) // 6 ([4,-1,2,1])

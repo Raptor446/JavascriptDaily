@@ -17,14 +17,14 @@ console.log(counter())
 const counter1 = {
   value: 0,
   increment() {
-    this.value++;
-    console.log(this.value);
+    this.value++
+    console.log(this.value)
   }
-};
+}
 
-counter1.increment(); // 1
-const fn = counter1.increment;
-fn(); // NaN or error, because `this` lost
+counter1.increment() // 1
+const fn = counter1.increment
+fn() // NaN or error, because `this` lost
 // fix with bind
-const fn2 = counter1.increment.bind(counter1);
-fn2(); // 2
+const fn2 = counter1.increment.bind(counter1)
+fn2() // 2
