@@ -1,0 +1,14 @@
+<ul id="list"></ul>
+<button id="add-item-btn">Add Item</button>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    let count = 0
+    $('#add-item-btn').on('click', function() {
+      count++
+      const newItem = $('<li>').text(`Item ${count}`) // Create a new jQuery object
+      $('#list').append(newItem)                   // Append it to the list
+    })
+  })
+</script>
