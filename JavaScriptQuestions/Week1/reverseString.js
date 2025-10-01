@@ -14,5 +14,11 @@ function reverseString (str) {
     return str.split('').reverse().join('')
 }
 
+function recursiveReverseString(s) {
+  if (s.length <= 1) return s
+  return recursiveReverseString(s.slice(1)) + s[0]
+}
+
 console.log('reverseTheString', reverseTheString('rohan'))
 console.log('reverseString', reverseString('ayush'))
+console.log('recursiveReverseString', recursiveReverseString("hello"))
