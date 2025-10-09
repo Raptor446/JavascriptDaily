@@ -12,6 +12,7 @@ const containsDuplicateBruteForce = (nums) => {
     }
     return false
 }
+
 console.log(containsDuplicateBruteForce([5,7,1,3]))
 
 // Optimised way -> T.C = O(n), S.C = O(n)

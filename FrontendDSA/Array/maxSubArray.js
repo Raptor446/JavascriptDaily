@@ -15,6 +15,7 @@ const maxSubArrayBruteForce = (nums) => {
     }
     return maxSum
 }
+
 console.log(maxSubArrayBruteForce([-2,1,-3,4,-1,2,1,-5,4]))
 
 // Optimised way(Kadane's Algorithm) -> T.C = O(n), S.C = O(1)

@@ -15,6 +15,7 @@ const productExceptSelfBruteForce = (nums) => {
     }
     return result
 }
+
 console.log(productExceptSelfBruteForce([1,2,3,4]))
 
 // Optimised way -> T.C = O(n), S.C = O(1)

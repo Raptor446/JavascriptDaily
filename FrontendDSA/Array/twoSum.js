@@ -11,6 +11,7 @@ const twoSumBruteForce = (nums, target) => {
     }
     return []
 }
+
 console.log(twoSumBruteForce([2,7,11,15], 9))
 
 // Optimised way ->  T.C = O(n), S.C = O(n) - We store at most n elements in the hash map.
