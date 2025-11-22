@@ -1,0 +1,15 @@
+/* Minimal app stylesheet to satisfy import in main.jsx */
+:root {
+  --bg: #ffffff;
+  --text: #111827;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* add any global styles you need below */

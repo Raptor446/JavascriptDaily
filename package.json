@@ -1,3 +1,6 @@
 {
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "lucide-react": "^0.554.0"
+  }
 }
