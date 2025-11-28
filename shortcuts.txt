@@ -1,1 +1,7 @@
+Emmet Shortcuts ---> You can create shortcuts after entering the keyboard shortcuts window, you should be able to access all of the Emmet actions by searching for Emmet:<action>. In our case, it will be Emmet:Wrap With Abbreviation
+
+Emmet Cheatsheet -> https://docs.emmet.io/cheat-sheet/
+
+// Shortcuts I generally use
+
 ! (exclamation mark) and press Tab -> For getting the html filled.
