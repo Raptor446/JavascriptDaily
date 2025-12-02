@@ -1,0 +1,126 @@
+<My Code>
+The input is controlled: its value comes from React state (query), and updates go through setQuery.
+The list is not mutated; we keep ITEMS constant and derive filteredItems with Array.filter.
+useMemo avoids recomputing the filter when query hasn’t changed (nice to mention for performance).
+Filter is case-insensitive and trims whitespace.
+
+<FollowUps>
+
+### 1. **How would you debounce the search?**
+
+**Goal:** Don’t filter on every keystroke; wait until the user pauses typing (e.g. 300–500ms).
+
+**Approach 1 – `useDebounce` hook**
+
+```jsx
+import { useEffect, useState, useMemo } from "react";
+
+function useDebounce(value, delay = 400) {
+  const [debounced, setDebounced] = useState(value);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setDebounced(value);
+    }, delay);
+
+    return () => clearTimeout(id); // cleanup on change/unmount
+  }, [value, delay]);
+
+  return debounced;
+}
+
+const ITEMS = [/* ... */];
+
+export default function SearchableList() {
+  const [query, setQuery] = useState("");
+
+  const debouncedQuery = useDebounce(query, 400);
+
+  const filteredItems = useMemo(() => {
+    const q = debouncedQuery.trim().toLowerCase();
+    if (!q) return ITEMS;
+    return ITEMS.filter((item) => item.toLowerCase().includes(q));
+  }, [debouncedQuery]);
+
+  // same JSX as before, but input bound to `query`
+}
+```
+
+**How to say it out loud:**
+
+> “I’d keep the input fully controlled, but only use a debounced value for the actual filtering. That way the UI feels responsive, but we don’t recompute the filter on every keystroke. A small `useDebounce` hook with `setTimeout` + cleanup works well, or I could use `lodash.debounce` if the team already has it.”
+
+---
+
+### 2. **How do you avoid unnecessary re-renders?**
+
+There are a few layers you can mention:
+
+1. **Derive, don’t store duplicate state**
+
+   * Don’t store both `query` and `filteredItems` in state.
+   * Keep source data (`ITEMS`) stable and derive `filteredItems` via `useMemo`.
+
+2. **Memoize expensive work**
+
+   * `useMemo` for `filteredItems` so it only recalculates when `query`/`debouncedQuery` changes.
+
+3. **Memoize child components**
+
+   If each list row is a separate component:
+
+   ```jsx
+   const ItemRow = React.memo(function ItemRow({ item }) {
+     return <li>{item}</li>;
+   });
+   ```
+
+   This way, rows don’t re-render if their props haven’t changed.
+
+4. **Stable callbacks**
+
+   If you pass callbacks to children (e.g. onClick handlers), wrap them in `useCallback` so their identity doesn’t change on every render.
+
+How you’d phrase it:
+
+> “First, I avoid storing redundant state and compute `filteredItems` from `query`. Then I’d wrap that computation in `useMemo`. If the list items are their own components, I’d use `React.memo` to keep them from re-rendering unnecessarily, and ensure callbacks passed down are stable with `useCallback`.”
+
+---
+
+### 3. **What if the list is 10,000 items long?**
+
+For 10 items, any approach works. For **10,000+**, you need to think about **performance** in two dimensions: **filtering cost** and **rendering cost**.
+
+#### a) Rendering cost → **Virtualization**
+
+Even with debouncing, rendering 10,000 DOM nodes is expensive. Use a virtualized list:
+
+* Libraries like **`react-window`** or **`react-virtualized`** render only what’s visible in the viewport.
+* React sees maybe 30–50 items at once instead of 10,000.
+
+How to say it:
+
+> “At that scale I’d use list virtualization — for example `react-window` — so the DOM only contains the visible rows instead of all 10,000.”
+
+#### b) Filtering cost → **Debounce + efficient search**
+
+* Keep debouncing to avoid filtering on each keystroke.
+* Still use `useMemo` for filtering.
+* For really heavy filters or complex search, you can:
+
+  * Pre-index data (e.g., create a lookup map).
+  * Offload work to a **web worker** if necessary.
+
+#### c) Data size → **Pagination / server-side search**
+
+If the list is huge or comes from a backend:
+
+* Don’t load all 10,000 items into the client.
+* Implement **server-side search** or **pagination**:
+
+  * Send `query` to backend and fetch only a small page of results.
+  * Combine with UI pagination / infinite scroll.
+
+How you’d phrase it:
+
+> “With 10,000 items, I’d first avoid rendering them all at once by using virtualization so only the visible rows are in the DOM. I’d still debounce the search and memoize the filter. If the data actually lives on a backend, I wouldn’t ship all 10,000 items to the client; I’d turn the search into a server-side query with pagination or infinite scroll.”
